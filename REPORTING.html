@@ -1,0 +1,2149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demography and Migration Presentation</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            color: #1e293b;
+        }        .slide-container {
+            width: 100%;
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y proximity;
+            scroll-behavior: smooth;
+            /* Hide scrollbar for Chrome, Safari and Opera */
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        .slide-container::-webkit-scrollbar {
+            display: none;  /* Chrome, Safari and Opera */
+        }
+        .slide {
+            width: 100%;
+            min-height: 100vh;
+            scroll-snap-align: start;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1rem;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+        @media (min-width: 768px) {
+            .slide {
+                padding: 2rem;
+            }
+        }
+        .slide-content {
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            width: 100%;
+            max-width: 1100px;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        @media (min-width: 768px) {
+            .slide-content {
+                padding: 2rem 3rem;
+            }
+        }
+        .slide-content p, .slide-content li {
+            text-align: center;
+        }
+        .slide-content h1, .slide-content h2, .slide-content h3 {
+            text-align: center;
+        }
+        .slide-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+        }
+        .text-shadow {
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+        }        .slide-number {
+            position: fixed;
+            bottom: 1rem;
+            right: 1rem;
+            background-color: rgba(0, 84, 166, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            z-index: 50;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .slide-number:hover {
+            background-color: rgba(0, 84, 166, 1);
+            transform: scale(1.05);
+        }
+        .presenter-tag {
+            position: fixed;
+            top: 1rem;
+            left: 1rem;
+            background-color: rgba(239, 68, 68, 0.9);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.875rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            z-index: 50;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+        .home-button {
+            background-color: rgba(34, 197, 94, 0.9);
+            color: white;
+            border: none;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+        .home-button:hover {
+            background-color: rgba(34, 197, 94, 1);
+            transform: scale(1.1);
+        }
+        .slide-fade {
+            opacity: 1;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide-fade.fade-out {
+            opacity: 0.3;
+        }
+        .quick-nav-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 80;
+            padding: 1rem;
+            backdrop-filter: blur(5px);
+        }
+        .quick-nav-modal.show {
+            display: flex;
+        }
+        .quick-nav-content {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.3);
+        }
+        .quick-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        .quick-nav-item {
+            background-color: #f3f4f6;
+            border: 2px solid transparent;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+        }
+        .quick-nav-item:hover {
+            background-color: #e5e7eb;
+            border-color: #0054A6;
+            transform: translateY(-2px);
+        }
+        .quick-nav-item.active {
+            background-color: #0054A6;
+            color: white;
+        }
+        .quick-nav-item .slide-thumb {
+            width: 100%;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 0.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+        .quick-nav-item .slide-info {
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        .quick-nav-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.3s;
+        }
+        .quick-nav-close:hover {
+            color: #1f2937;
+        }
+        h1, h2, h3 {
+            font-family: 'Inter', sans-serif;
+            font-weight: 900;
+            letter-spacing: -0.05em;
+        }
+        .icon {
+            font-size: 2rem;
+            color: #0054A6;
+        }
+        .interactive-prompt {
+            background-color: #e0f2fe;
+            border-left: 5px solid #0ea5e9;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        .vs-divider {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #0054A6;
+            color: white;
+            border-radius: 50%;
+            width: 4rem;
+            height: 4rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.5rem;
+            border: 4px solid white;
+            font-family: 'Inter', sans-serif;
+            z-index: 10;
+        }
+        .nav-buttons {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            display: flex;
+            gap: 0.5rem;
+            z-index: 50;
+        }
+        .nav-button {
+            background-color: #0054A6;
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .nav-button:hover {
+            background-color: #003b75;
+        }
+        .nav-button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .nav-button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }        .dot-nav {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            z-index: 50;
+            background-color: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 1rem;
+            border-radius: 1rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            max-height: 70vh;
+            overflow: hidden;
+            width: 50px;
+            min-width: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }.dot-nav-container {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            align-items: center;
+            max-height: 350px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 4px 0;
+            scroll-behavior: smooth;
+            /* Hide scrollbar for cleaner look */
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .dot-nav-container::-webkit-scrollbar {
+            display: none;
+        }        .dot-nav-item {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 1px solid rgba(0, 84, 166, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            flex-shrink: 0;
+        }
+        .dot-nav-item:hover {
+            background-color: rgba(0, 84, 166, 0.6);
+            border-color: rgba(0, 84, 166, 0.8);
+            transform: scale(1.4);
+        }
+        .dot-nav-item.active {
+            background-color: rgba(0, 84, 166, 0.9);
+            border-color: #0054A6;
+            transform: scale(1.5);
+            box-shadow: 0 0 12px rgba(0, 84, 166, 0.4);
+        }
+        .dot-nav-item::before {
+            content: attr(data-slide);
+            position: absolute;
+            right: 35px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            color: white;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 100;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .dot-nav-item:hover::before {
+            opacity: 1;        }
+        .toc-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #0054A6;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 9999px;
+            cursor: pointer;
+            z-index: 60;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+        .toc-button:hover {
+            background-color: #003b75;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+        }
+        .toc-button:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.5);
+        }
+        .toc-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 70;
+            padding: 1rem;
+        }
+        .toc-modal.show {
+            display: flex;
+        }
+        .toc-content {
+            background-color: white;
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+        }
+        .toc-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .toc-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            flex: 1;
+        }
+        .toc-close {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+            transition: color 0.3s;
+        }
+        .toc-close:hover {
+            color: #1f2937;
+        }
+        .toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .toc-item {
+            margin-bottom: 0.5rem;
+        }
+        .toc-link {
+            display: block;
+            padding: 0.75rem 1rem;
+            background-color: #f3f4f6;
+            border-radius: 0.5rem;
+            text-decoration: none;
+            color: #1f2937;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        .toc-link:hover {
+            background-color: #e5e7eb;
+            transform: translateX(4px);
+        }
+        .toc-link:focus-visible {
+            outline: none;
+            border-color: #3b82f6;
+        }
+        .toc-presenter {
+            font-size: 0.875rem;
+            color: #6b7280;
+            font-weight: 600;
+        }
+        .slide-content ul {
+            list-style: none;
+            padding-left: 0;
+            text-align: left;
+        }
+        .slide-content ul li {
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%230054A6" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>') no-repeat left center;
+            background-size: 20px;
+            padding-left: 35px;
+            margin-bottom: 0.75rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            text-align: left;
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+    <button id="tocButton" class="toc-button" aria-label="Open Table of Contents">
+        <i class="fas fa-list"></i>
+        <span class="hidden sm:inline">Contents</span>
+    </button>
+
+    <div id="tocModal" class="toc-modal" aria-hidden="true">
+        <div class="toc-content">
+            <div class="toc-header">
+                <h2 class="toc-title">Table of Contents</h2>
+                <button id="tocClose" class="toc-close" aria-label="Close Table of Contents">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <ul class="toc-list">
+                <li class="toc-item">
+                    <a href="#slide1" class="toc-link">
+                        <div>1. People on the Move</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide2" class="toc-link">
+                        <div>2. What's the Big Deal About Counting People?</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide3" class="toc-link">
+                        <div>3. Demography is the Story of Us</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide4" class="toc-link">
+                        <div>4. The Global Family Album</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide5" class="toc-link">
+                        <div>5. Family Size: Economic Boost or Budget Buster?</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide6" class="toc-link">
+                        <div>6. Let's Talk About It!</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide7" class="toc-link">
+                        <div>7. Is "Overpopulation" a Real Threat?</div>
+                        <div class="toc-presenter">Presenter: Alyssa</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide8" class="toc-link">
+                        <div>8. The Population Puzzle</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide9" class="toc-link">
+                        <div>9. Blast from the Past: Theories on Population</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide10" class="toc-link">
+                        <div>10. The Case for Population Control</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide11" class="toc-link">
+                        <div>11. Critiques of Population Control</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide12" class="toc-link">
+                        <div>12. More People, More Power?</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide13" class="toc-link">
+                        <div>13. Overpopulation: Myth or Reality?</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide14" class="toc-link">
+                        <div>14. Rights, Resources, & Realities</div>
+                        <div class="toc-presenter">Presenter: Alfonso</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide15" class="toc-link">
+                        <div>15. The Human Element</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide16" class="toc-link">
+                        <div>16. Women at the Center of Demography</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide17" class="toc-link">
+                        <div>17. Feminist Perspectives on Population</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide18" class="toc-link">
+                        <div>18. The UNFPA's "Three Zeros"</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide19" class="toc-link">
+                        <div>19. Feeding the World: Sovereignty vs. Security</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide20" class="toc-link">
+                        <div>20. The Food Challenge - Part 1</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide20b" class="toc-link">
+                        <div>20b. The Food Challenge - Part 2</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide21" class="toc-link">
+                        <div>21. The World of MIGRATION</div>
+                        <div class="toc-presenter">Presenter: Erika</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide22" class="toc-link">
+                        <div>22. The Great Human Shuffle</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide23" class="toc-link">
+                        <div>23. What IS Migration, Anyway?</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide24" class="toc-link">
+                        <div>24. Faces in the Crowd: Types of Migrants</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide25" class="toc-link">
+                        <div>25. Why Leave Home? Push & Pull Factors</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide26" class="toc-link">
+                        <div>26. Migration by the Numbers</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide27" class="toc-link">
+                        <div>27. The Impact Zone - Economic Engine</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide27b" class="toc-link">
+                        <div>27b. The Impact Zone - Challenges</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide28" class="toc-link">
+                        <div>28. Let's Hear Your Thoughts!</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide29" class="toc-link">
+                        <div>29. The Other Side of the Coin</div>
+                        <div class="toc-presenter">Presenter: Lor</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide30" class="toc-link">
+                        <div>30. Homelands & Horizons</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide31" class="toc-link">
+                        <div>31. The Impact Back Home</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide32" class="toc-link">
+                        <div>32. The Darker Sides of a Global Journey</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide32b" class="toc-link">
+                        <div>32b. The Darker Sides - Part 2</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide33" class="toc-link">
+                        <div>33. The Migrant Experience: Not One-Size-Fits-All</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide34" class="toc-link">
+                        <div>34. The Future of Moving</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide35" class="toc-link">
+                        <div>35. Wrapping It All Up</div>
+                        <div class="toc-presenter">Presenter: Carl</div>
+                    </a>
+                </li>
+                <li class="toc-item">
+                    <a href="#slide36" class="toc-link">
+                        <div>36. Your Voice Matters!</div>
+                        <div class="toc-presenter">All Presenters</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>    <!-- Advanced Navigation Elements -->
+    <div class="presenter-tag" id="presenterTag">
+        <i class="fa-solid fa-user"></i>
+        <span id="currentPresenter">Alyssa</span>
+    </div>
+    
+    <div class="slide-number" id="slideNumber">
+        <button class="home-button" id="homeButton" title="Go to first slide">
+            <i class="fa-solid fa-home"></i>
+        </button>
+        <span id="currentSlideNumber">1 / 36</span>
+    </div>
+    
+    <!-- Quick Navigation Modal -->
+    <div class="quick-nav-modal" id="quickNavModal">
+        <div class="quick-nav-content">
+            <button class="quick-nav-close" id="quickNavClose">&times;</button>
+            <h2 class="text-2xl font-bold mb-4">Quick Navigation</h2>
+            <div class="quick-nav-grid" id="quickNavGrid">
+                <!-- Grid items will be generated dynamically -->
+            </div>
+        </div>
+    </div>    <div class="dot-nav" id="dotNav">
+        <div class="dot-nav-container" id="dotContainer">
+            <!-- Dots will be generated dynamically -->
+        </div>
+    </div>
+
+    <div id="slide-container" class="slide-container">
+        
+        <section id="slide1" class="slide" style="background-image: url('https://images.pexels.com/photos/3184418/pexels-photo-3184418.jpeg?auto=compress&cs=tinysrgb&w=1920');">
+            <div class="absolute inset-0 slide-overlay"></div>            <div class="slide-content text-center text-white bg-black/60 backdrop-filter-none border-none">
+                <p class="text-xl font-semibold text-yellow-300 text-shadow !text-center">Lesson 5, Unit 2: Demography and Migration</p>
+                <h1 class="text-5xl md:text-7xl leading-tight mt-2 text-shadow">People on the Move</h1>
+                <p class="text-3xl md:text-4xl font-light mt-2 text-shadow !text-center">Demography, Migration & Our Globalized World</p>
+                <div class="mt-8 border-t-2 border-yellow-300 w-1/4 mx-auto"></div>
+                <p class="mt-8 text-xl text-shadow !text-center">
+                    <span class="font-bold">Presenters:</span> Alyssa, Alfonso, Erika, Lor, Carl
+                </p>
+            </div>
+
+        </section>        <section id="slide2" class="slide">
+            <div class="slide-content" style="padding-bottom: 2rem;">
+                <h2 class="text-2xl md:text-3xl font-bold text-center mb-4">What's the Big Deal About Counting People?</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center">
+                    <div>
+                        <img src="https://images.pexels.com/photos/1486222/pexels-photo-1486222.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-xl shadow-lg h-32 md:h-48 w-full object-cover" 
+                             alt="Crowded urban street with diverse people" 
+                             loading="lazy">
+                        <p class="text-center mt-1 text-sm font-semibold">Crowded Cities</p>
+                    </div>
+                    <div>
+                         <img src="https://images.pexels.com/photos/1287145/pexels-photo-1287145.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                              class="rounded-xl shadow-lg h-32 md:h-48 w-full object-cover" 
+                              alt="Peaceful rural landscape with open fields" 
+                              loading="lazy">
+                         <p class="text-center mt-1 text-sm font-semibold">Spacious Landscapes</p>
+                    </div>
+                </div>
+                 <div class="interactive-prompt mt-4">
+                    <p class="text-lg font-bold text-sky-800 text-center">"How many of you have ever wondered why your family is the size it is? Or why some countries seem packed while others are spacious?"</p>
+                </div>
+            </div>
+        </section>        <section id="slide3" class="slide">
+
+            <div class="slide-content" style="padding-bottom: 2rem;">
+                <!-- Main Title Section -->
+                <div class="text-center mb-5">
+                    <h2 class="text-3xl md:text-4xl font-bold">Demography is the <span class="text-blue-600">Story of Us.</span></h2>
+                    <p class="mt-3 text-lg text-gray-600 max-w-3xl mx-auto">It's more than just numbers. It's the study of human populations—how they grow, shrink, and change over time.</p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Key Ingredients Section -->
+                    <div class="bg-gradient-to-br from-blue-50 to-indigo-100 p-5 rounded-xl border border-blue-200">
+                        <h3 class="text-xl font-bold text-center mb-4 text-blue-800">
+                            <i class="fas fa-puzzle-piece text-blue-600 mr-2"></i>
+                            The Key Ingredients
+                        </h3>
+                        <div class="grid grid-cols-1 gap-3">
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm border-l-4 border-green-400">
+                                <i class="fas fa-baby text-green-500 text-lg"></i>
+                                <div>
+                                    <span class="font-semibold text-base">Births</span>
+                                    <span class="text-gray-500 ml-2 text-sm">(Fertility)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm border-l-4 border-red-400">
+                                <i class="fas fa-heart text-red-500 text-lg"></i>
+                                <div>
+                                    <span class="font-semibold text-base">Deaths</span>
+                                    <span class="text-gray-500 ml-2 text-sm">(Mortality)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm border-l-4 border-pink-400">
+                                <i class="fas fa-ring text-pink-500 text-lg"></i>
+                                <div>
+                                    <span class="font-semibold text-base">Marriage</span>
+                                    <span class="text-gray-500 ml-2 text-sm">(Family Formation)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm border-l-4 border-purple-400">
+                                <i class="fas fa-plane text-purple-500 text-lg"></i>
+                                <div>
+                                    <span class="font-semibold text-base">Moving</span>
+                                    <span class="text-gray-500 ml-2 text-sm">(Migration)</span>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm border-l-4 border-orange-400">
+                                <i class="fas fa-users text-orange-500 text-lg"></i>
+                                <div>
+                                    <span class="font-semibold text-base">Social Shifts</span>
+                                    <span class="text-gray-500 ml-2 text-sm">(Cultural Changes)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Why It Matters Section -->
+                    <div class="bg-gradient-to-br from-slate-50 to-gray-100 p-5 rounded-xl border border-gray-200">
+                        <h3 class="text-xl font-bold text-center mb-4 text-gray-800">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-2"></i>
+                            Why It Matters to Gen Z
+                        </h3>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <div class="bg-blue-100 p-2 rounded-full">
+                                    <i class="fas fa-chart-line text-blue-600 text-base"></i>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-base">Your Future Economy & Career</span>
+                                    <p class="text-sm text-gray-600">Job markets, retirement systems</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <div class="bg-green-100 p-2 rounded-full">
+                                    <i class="fas fa-leaf text-green-600 text-base"></i>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-base">Environmental Challenges</span>
+                                    <p class="text-sm text-gray-600">Climate change, resource use</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <div class="bg-purple-100 p-2 rounded-full">
+                                    <i class="fas fa-balance-scale text-purple-600 text-base"></i>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-base">Social Justice Issues</span>
+                                    <p class="text-sm text-gray-600">Equality, representation</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-3 bg-white p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow">
+                                <div class="bg-red-100 p-2 rounded-full">
+                                    <i class="fas fa-map-marker-alt text-red-600 text-base"></i>
+                                </div>
+                                <div>
+                                    <span class="font-semibold text-base">Where You Might Live</span>
+                                    <p class="text-sm text-gray-600">Urban planning, housing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Interactive closing section -->
+                <div class="mt-5 text-center">
+                    <div class="bg-gradient-to-r from-blue-100 to-indigo-100 p-4 rounded-xl border border-blue-200">
+                        <p class="text-lg font-semibold text-blue-800">
+                            <i class="fas fa-question-circle text-blue-600 mr-2"></i>
+                            Ready to explore how these forces shape our world?
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+        </section><section id="slide4" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">The Global Family Album: <span class="text-blue-600">Who & Where We Are</span></h2>
+                <div class="text-center my-6">
+                    <p class="text-2xl">Current World Population</p>
+                    <p class="text-8xl font-black text-blue-600">8.1+ Billion</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center">
+                    <div class="bg-red-100 p-6 rounded-xl border-2 border-red-300">
+                        <h3 class="text-3xl font-bold text-red-700">Population Hotspots <i class="fas fa-fire"></i></h3>
+                        <p class="mt-2 text-lg">Where population is booming!</p>
+                        <p class="font-semibold text-xl mt-4">Parts of Africa & Asia</p>
+                    </div>
+                    <div class="bg-sky-100 p-6 rounded-xl border-2 border-sky-300">
+                        <h3 class="text-3xl font-bold text-sky-700">Cooling Down <i class="fas fa-snowflake"></i></h3>
+                        <p class="mt-2 text-lg">Where growth is slowing or aging.</p>
+                        <p class="font-semibold text-xl mt-4">Parts of Europe & Japan</p>
+                    </div>
+                </div>
+                 <p class="text-center mt-6 text-slate-600 italic">This shifting balance impacts global power, business, and culture.</p>
+            </div>
+
+        </section>        <section id="slide5" class="slide">
+
+            <div class="slide-content" style="padding-bottom: 2rem;">
+                <h2 class="text-2xl md:text-3xl text-center mb-4">Family Size: <span class="text-blue-600">Economic Boost or Budget Buster?</span></h2>
+                
+                <div class="md:hidden space-y-3">
+                    <div class="p-4 rounded-xl bg-green-50 border border-green-200 text-center">
+                        <img src="https://images.pexels.com/photos/2131967/pexels-photo-2131967.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mb-3 h-32 w-full object-cover" 
+                             alt="Rural family working together in fields" 
+                             loading="lazy">
+                        <h3 class="text-lg font-bold text-green-800">Rural Realities</h3>
+                        <p class="mt-1 text-sm">More hands for the farm or family business.</p>
+                        <p class="mt-1 text-sm font-semibold">Kids as an asset & "retirement plan."</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-purple-50 border border-purple-200 text-center">
+                        <img src="https://images.pexels.com/photos/1620653/pexels-photo-1620653.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mb-3 h-32 w-full object-cover" 
+                             alt="Urban family in modern apartment" 
+                             loading="lazy">
+                        <h3 class="text-lg font-bold text-purple-800">Urban Vibes</h3>
+                        <p class="mt-1 text-sm">Careers and city living often mean smaller families.</p>
+                        <p class="mt-1 text-sm font-semibold">Different economic realities & support systems.</p>
+                    </div>
+                </div>
+                
+                <div class="hidden md:grid grid-cols-2 gap-3 relative">
+                    <div class="p-4 rounded-xl bg-green-50 border border-green-200 text-center">
+                        <img src="https://images.pexels.com/photos/2131967/pexels-photo-2131967.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mb-3 h-48 w-full object-cover" 
+                             alt="Rural family working together in fields" 
+                             loading="lazy">
+                        <h3 class="text-xl font-bold text-green-800">Rural Realities</h3>
+                        <p class="mt-1 text-base">More hands for the farm or family business.</p>
+                        <p class="mt-1 text-base font-semibold">Kids as an asset & "retirement plan."</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-purple-50 border border-purple-200 text-center">
+                        <img src="https://images.pexels.com/photos/1620653/pexels-photo-1620653.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mb-3 h-48 w-full object-cover" 
+                             alt="Urban family in modern apartment" 
+                             loading="lazy">
+                        <h3 class="text-xl font-bold text-purple-800">Urban Vibes</h3>
+                        <p class="mt-1 text-base">Careers and city living often mean smaller families.</p>
+                        <p class="mt-1 text-base font-semibold">Different economic realities & support systems.</p>
+                    </div>
+                    <div class="vs-divider hidden md:flex">VS</div>
+                </div>
+            </div>
+
+        </section>        <section id="slide6" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6"><i class="fas fa-comments text-sky-500"></i> Let's Talk About It!</h2>
+                <div class="interactive-prompt text-center">
+                    <p class="text-2xl font-bold text-sky-800">Quick Poll!</p>
+                    <p class="mt-2 text-lg">Raise your hand if you imagine having...</p>
+                    <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-4 text-xl">
+                        <span><i class="fas fa-users"></i> A big family (3+ kids)?</span>
+                        <span><i class="fas fa-user-friends"></i> A small family (1-2 kids)?</span>
+                        <span><i class="fas fa-user"></i> No kids?</span>
+                    </div>
+                </div>
+                <div class="interactive-prompt mt-6">
+                    <p class="text-2xl font-bold text-sky-800 text-center">What do YOU think?</p>
+                    <p class="mt-2 text-lg text-center">What most influences family size decisions for young people in the Philippines today?</p>
+                </div>
+            </div>
+
+        </section>
+        
+        <section id="slide7" class="slide" style="background-image: url('https://images.pexels.com/photos/220201/pexels-photo-220201.jpeg?auto=compress&cs=tinysrgb&w=1920');">
+            <div class="absolute inset-0 slide-overlay"></div>
+            <div class="slide-content text-center text-white bg-transparent border-none">
+                 <p class="text-2xl font-semibold text-shadow">Coming Up Next...</p>
+                 <h2 class="text-6xl my-4 text-shadow">Is "Overpopulation" a Real Threat?</h2>
+                 <i class="fas fa-globe-americas text-9xl mt-4 text-sky-300 animate-pulse"></i>
+                 <p class="mt-8 text-xl text-shadow">Presenter 2 (Alfonso) will tackle the debate.</p>
+            </div>
+
+
+        </section>        <section id="slide8" class="slide">
+
+            <div class="slide-content text-center" style="padding-bottom: 2rem;">
+                
+                <!-- Main Title with Animation -->
+                <div class="mb-6">
+                    <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-green-600 to-emerald-500 bg-clip-text text-transparent">
+                        The Population Puzzle
+                    </h1>
+                    <p class="text-xl md:text-2xl mt-3 text-gray-700 font-medium">
+                        Too Many People? 🤔 The Overpopulation Debate
+                    </p>
+                </div>
+
+                <!-- Compact Visual Section -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl border-2 border-red-200">
+                        <div class="text-3xl mb-1">🚨</div>
+                        <h3 class="text-lg font-bold text-red-700">The Alarm</h3>
+                        <p class="text-sm text-red-600">"Too many people!"</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-xl border-2 border-yellow-200">
+                        <div class="text-3xl mb-1">⚖️</div>
+                        <h3 class="text-lg font-bold text-yellow-700">The Balance</h3>
+                        <p class="text-sm text-yellow-600">Resources vs. People</p>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-green-50 to-green-100 p-4 rounded-xl border-2 border-green-200">
+                        <div class="text-3xl mb-1">💡</div>
+                        <h3 class="text-lg font-bold text-green-700">The Reality</h3>
+                        <p class="text-sm text-green-600">What's the real story?</p>
+                    </div>
+                </div>
+
+                <!-- Streamlined Question Section -->
+                <div class="bg-gradient-to-r from-slate-100 to-gray-100 p-4 rounded-xl border-2 border-gray-200 mb-4">
+                    <div class="text-2xl md:text-3xl font-black text-gray-800 mb-2">
+                        🌍 THE BIG QUESTION 🌍
+                    </div>
+                    <p class="text-lg md:text-xl font-bold text-gray-700">
+                        Are we heading for disaster... or is this just hype?
+                    </p>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="interactive-prompt">
+                    <p class="text-lg font-bold text-green-800">
+                        <i class="fas fa-rocket text-green-600 mr-2"></i>
+                        Let's challenge what you think you know about population!
+                    </p>
+                </div>
+            </div>
+
+        </section><section id="slide9" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Blast from the Past: <span class="text-green-600">Theories on Population</span></h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="p-4 rounded-xl bg-amber-50">
+                        <h3 class="text-2xl font-bold">Malthus 101 (1798)</h3>
+                        <p class="text-lg mt-2">Population grows <span class="font-bold">geometrically</span> (2, 4, 8, 16...).</p>
+                        <p class="text-lg">Food supply grows <span class="font-bold">arithmetically</span> (1, 2, 3, 4...).</p>
+                        <p class="text-2xl font-black text-red-600 mt-2">Conclusion: Uh oh!</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-red-50">
+                        <h3 class="text-2xl font-bold">"The Population Bomb" (1968)</h3>
+                        <p class="text-lg mt-2">Predicted mass starvation and global chaos due to rapid population growth.</p>
+                        <p class="text-2xl font-black text-red-600 mt-2">A 1960s Panic!</p>
+                    </div>
+                </div>
+                <div class="interactive-prompt mt-6 text-center">
+                    <p class="text-2xl font-bold text-sky-800">Were they right? Are we living their nightmare?</p>
+                </div>
+            </div>
+
+        </section>
+          <section id="slide10" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Pumping the Brakes: <span class="text-green-600">The Case for Population Control</span></h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h3 class="text-2xl font-bold">Why Control?</h3>
+                        <ul>
+                            <li>Strain on resources (water, food, land)</li>
+                            <li>Economic progress held back?</li>
+                        </ul>
+                        <img src="https://images.pexels.com/photos/259165/pexels-photo-259165.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                             class="rounded-lg mt-4 h-40 w-full object-cover" 
+                             alt="Strained resources" 
+                             loading="lazy">
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">The Policy Toolkit:</h3>
+                        <ul>
+                            <li>China's One-Child Policy</li>
+                            <li>PH RPRH Law (RA 10354)</li>
+                            <li>Incentives & education</li>
+                        </ul>
+                         <img src="https://images.pexels.com/photos/6149010/pexels-photo-6149010.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                              class="rounded-lg mt-4 h-40 w-full object-cover" 
+                              alt="Family planning education materials" 
+                              loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide11" class="slide">
+
+            <div class="slide-content text-center" style="padding-bottom: 2rem;">
+                <h2 class="text-2xl md:text-3xl mb-2">Hold Up! Critiques of Population Control</h2>
+                <p class="text-base mb-4">A perspective from <span class="font-bold">Betsy Hartmann</span> and others...</p>
+                <div class="bg-rose-100 border-2 border-rose-300 p-4 rounded-2xl">
+                    <h3 class="text-2xl md:text-3xl font-black text-rose-700">Is population the REAL villain?</h3>
+                    <p class="text-xl font-bold my-3">Or is it...</p>
+                    <p class="text-2xl md:text-3xl font-black text-rose-700">SOCIAL INJUSTICE?</p>
+                    <div class="mt-4 text-sm font-medium grid grid-cols-2 gap-2">
+                      <span><i class="fas fa-divide"></i> Unequal Resource Distribution?</span>
+                      <span><i class="fas fa-landmark"></i> Need for Land Reform?</span>
+                      <span><i class="fas fa-briefcase"></i> More Jobs & Education?</span>
+                      <span><i class="fas fa-heartbeat"></i> Healthcare for ALL?</span>
+                    </div>
+                    <p class="mt-4 text-base font-bold bg-rose-700 text-white py-1 px-3 rounded-full inline-block">Focus Shift: Empowerment Over Control</p>
+                </div>
+            </div>
+
+        </section>        <section id="slide12" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">More People, More Power? <span class="text-green-600">Population as an Economic Engine</span></h2>
+                 <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center">
+                        <img src="https://images.pexels.com/photos/3184291/pexels-photo-3184291.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-xl shadow-lg h-64 w-full object-cover" 
+                             alt="Young professionals collaborating" 
+                             loading="lazy">
+                        <p class="mt-4 text-lg font-semibold">More people can mean more brainpower, innovation, and a larger workforce.</p>
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-green-700">"Demographic Window of Opportunity"</h3>
+                        <p class="mt-2 text-lg">A period with a large working-age population and fewer dependents (young & old).</p>
+                        
+                        <div class="bg-green-50 border-2 border-green-200 p-4 rounded-xl mt-4">
+                            <h4 class="text-xl font-bold text-green-800 text-center">The "Youth Bulge"</h4>
+                            <p class="text-lg mt-2">Blessing or Burden?</p>
+                            <div class="grid grid-cols-2 gap-3 mt-3 text-sm">
+                                <div class="bg-white p-2 rounded-lg">
+                                    <span class="font-semibold text-green-600">✓ Blessing:</span> Energy, innovation, productivity
+                                </div>
+                                <div class="bg-white p-2 rounded-lg">
+                                    <span class="font-semibold text-red-600">⚠ Burden:</span> Need jobs, education, infrastructure
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="interactive-prompt mt-4">
+                            <p class="text-xl font-bold text-sky-800">For the Philippines: Are we in this window? Are we making the most of it?</p>
+                        </div>
+                    </div>
+                 </div>
+            </div>
+
+        </section>
+          <section id="slide13" class="slide">
+
+            <div class="slide-content text-center">
+                <h2 class="text-4xl mb-6"><i class="fas fa-vote-yea text-sky-500"></i> Overpopulation: Myth or Reality?</h2>
+                <div class="interactive-prompt">
+                    <p class="text-2xl font-bold text-sky-800">Real talk time! YOU Decide!</p>
+                    <p class="mt-2 text-lg">Is 'overpopulation' the MAIN problem, or is it how we manage and share what we have?</p>
+                </div>
+                <div class="flex flex-col md:flex-row justify-center gap-4 md:gap-8 mt-8">
+                    <button class="bg-blue-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-blue-600 transform hover:scale-105 transition-transform">A: Overpopulation is the core issue.</button>
+                    <button class="bg-teal-500 text-white font-bold py-4 px-8 rounded-lg text-xl hover:bg-teal-600 transform hover:scale-105 transition-transform">B: Resource management is the core issue.</button>
+                </div>
+            </div>
+
+        </section>
+
+        <section id="slide14" class="slide" style="background-image: url('https://images.pexels.com/photos/1181534/pexels-photo-1181534.jpeg?auto=compress&cs=tinysrgb&w=1920');">
+            <div class="absolute inset-0 slide-overlay"></div>
+            <div class="slide-content text-center text-white bg-transparent border-none">
+                 <p class="text-2xl font-semibold">What's Next in the Story?</p>
+                 <h2 class="text-6xl my-4">Rights, Resources, & Realities</h2>
+                 <i class="fas fa-female text-9xl mt-4 text-pink-300 animate-pulse"></i>
+                 <p class="mt-8 text-xl">[Presenter 3: Erika] will explore the role of women and food security.</p>
+            </div>
+ 
+
+        </section>        <section id="slide15" class="slide">
+
+            <div class="slide-content text-center">
+                <!-- Dynamic Title Section -->
+                <div class="mb-6">
+                    <h1 class="text-4xl md:text-5xl font-black bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent">
+                        The Human Element
+                    </h1>
+                    <p class="text-xl md:text-2xl mt-3 font-semibold text-gray-700">
+                        Rights, Resources, & Realities: <span class="text-pink-600">Women, Food & Our Global Population</span>
+                    </p>
+                </div>
+
+                <!-- Interactive Visual Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 my-6">
+                    <!-- Women's Rights Card -->
+                    <div class="bg-gradient-to-br from-pink-50 to-rose-100 p-4 rounded-xl border-2 border-pink-200 transform hover:scale-105 transition-transform">
+                        <div class="text-3xl mb-2">⚖️</div>
+                        <h3 class="text-lg font-bold text-pink-700">Rights</h3>
+                        <p class="text-sm text-pink-600">Equality & Empowerment</p>
+                    </div>
+
+                    <!-- Resources Card -->
+                    <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-4 rounded-xl border-2 border-green-200 transform hover:scale-105 transition-transform">
+                        <div class="text-3xl mb-2">🌾</div>
+                        <h3 class="text-lg font-bold text-green-700">Resources</h3>
+                        <p class="text-sm text-green-600">Food & Sustainability</p>
+                    </div>
+
+                    <!-- Realities Card -->
+                    <div class="bg-gradient-to-br from-purple-50 to-violet-100 p-4 rounded-xl border-2 border-purple-200 transform hover:scale-105 transition-transform">
+                        <div class="text-3xl mb-2">🌍</div>
+                        <h3 class="text-lg font-bold text-purple-700">Realities</h3>
+                        <p class="text-sm text-purple-600">Global Impact</p>
+                    </div>
+                </div>
+
+                <!-- Hero Image with Overlay Stats -->
+                <div class="relative my-6">
+                    <img src="https://images.pexels.com/photos/8106770/pexels-photo-8106770.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                         class="rounded-xl shadow-lg w-full h-64 object-cover" 
+                         alt="Woman farmer holding produce" 
+                         loading="lazy">
+                    
+                    <!-- Floating Stats -->
+                    <div class="absolute top-2 left-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-md">
+                        <p class="text-xs font-bold text-pink-600">🚺 50.8% of global population</p>
+                    </div>
+                    <div class="absolute top-2 right-2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-md">
+                        <p class="text-xs font-bold text-green-600">🌾 Produce 60-80% of food</p>
+                    </div>
+                    <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 bg-white/90 backdrop-blur-sm p-2 rounded-lg shadow-md">
+                        <p class="text-xs font-bold text-purple-600">💪 Yet face systemic inequalities</p>
+                    </div>
+                </div>
+
+                <!-- Call to Action -->
+                <div class="mt-4">
+                    <p class="text-base font-bold text-pink-700">
+                        <i class="fas fa-female text-pink-500 mr-2"></i>
+                        Let's explore how women's empowerment shapes our global future!
+                    </p>
+                </div>
+            </div>
+
+        </section><section id="slide16" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Women at the <span class="text-pink-500">Center of Demography</span></h2>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="text-center">
+                         <img src="https://images.pexels.com/photos/3184405/pexels-photo-3184405.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                              class="rounded-xl shadow-lg" 
+                              alt="Diverse group of professional women in workplace" 
+                              loading="lazy">
+                    </div>
+                    <div>
+                        <p class="bg-pink-100 text-pink-800 font-bold p-4 rounded-lg text-xl mb-4"><i class="fas fa-key"></i> FACT: Women's well-being is KEY to societal health.</p>
+                        <h3 class="text-2xl font-bold">Empowerment through Education:</h3>
+                        <ul>
+                            <li>Educated women = often smaller, healthier families.</li>
+                            <li>Better economic prospects = more life choices.</li>
+                        </ul>
+                        <h3 class="text-2xl font-bold mt-4">Control Over Their Own Bodies:</h3>
+                        <ul>
+                            <li>The fundamental right to decide. A human rights issue.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide17" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Feminist Perspectives on Population</h2>
+                 <div class="grid md:grid-cols-2 gap-8 items-center">
+                     <div class="p-4">
+                        <h3 class="text-3xl font-bold">It's Not Just About Numbers.</h3>
+                        <p class="mt-2 text-lg">Critiques 'compulsory' population control that targets marginalized women.</p>
+                        <p class="mt-4 text-2xl font-bold">Real Change = Systemic Change.</p>
+                     </div>
+                     <div class="bg-slate-100 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-center">Focus on Justice:</h3>
+                        <ul class="mt-4">
+                            <li>Fair Wealth Distribution</li>
+                            <li>Universal Healthcare & Education</li>
+                            <li>True Gender Equality</li>
+                        </ul>
+                     </div>
+                 </div>
+            </div>
+
+        </section>        <section id="slide18" class="slide">
+
+            <div class="slide-content text-center">
+                <img src="https://www.unfpa.org/sites/default/files/logo/UNFPA-logo-blue_1.png" alt="UNFPA Logo" class="h-20 mx-auto mb-4" onerror="this.style.display='none'; document.getElementById('unfpa-text').style.display='block';">
+                <h2 id="unfpa-text" style="display:none;" class="text-3xl font-bold text-blue-600 mb-4">UNFPA</h2>
+                <h2 class="text-4xl mb-6">A Global Push: <span class="text-pink-500">The UNFPA's "Three Zeros"</span></h2>
+                <div class="grid md:grid-cols-3 gap-6 text-center">
+                    <div class="bg-blue-100 p-6 rounded-xl">
+                        <p class="text-7xl font-black text-blue-600">0</p>
+                        <h3 class="text-2xl font-bold mt-2">Maternal Deaths</h3>
+                        <p class="mt-2">Every mother's life matters.</p>
+                    </div>
+                    <div class="bg-green-100 p-6 rounded-xl">
+                        <p class="text-7xl font-black text-green-600">0</p>
+                        <h3 class="text-2xl font-bold mt-2">Unmet Need for Family Planning</h3>
+                        <p class="mt-2">Access to choice for all.</p>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-xl">
+                        <p class="text-7xl font-black text-red-600">0</p>
+                        <h3 class="text-2xl font-bold mt-2">Gender-Based Violence</h3>
+                        <p class="mt-2">Ensuring safety and dignity.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide19" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Feeding the World: <span class="text-pink-500">Sovereignty vs. Security</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative pt-8 md:pt-0">
+                    <div class="p-6 rounded-xl bg-amber-50 border border-amber-200">
+                        <h3 class="text-3xl font-bold text-amber-800">Food Sovereignty</h3>
+                        <p class="mt-2 text-lg">The right of communities to define their own food and agriculture policies.</p>
+                        <ul class="mt-4">
+                            <li>Focus on local, sustainable, cultural foods</li>
+                            <li>Power to the people/community</li>
+                        </ul>
+                    </div>
+                     <div class="p-6 rounded-xl bg-cyan-50 border border-cyan-200">
+                        <h3 class="text-3xl font-bold text-cyan-800">Food Security</h3>
+                        <p class="mt-2 text-lg">Is enough safe, nutritious food AVAILABLE and ACCESSIBLE to everyone, always?</p>
+                        <ul class="mt-4">
+                            <li>Focus on access and availability</li>
+                        </ul>
+                    </div>
+                    <div class="vs-divider hidden md:flex">VS</div>
+                </div>
+                <div class="interactive-prompt mt-6 text-center">
+                    <p class="text-xl font-bold text-sky-800">Can you have one without the other?</p>
+                </div>
+            </div>
+
+        </section>        <section id="slide20" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">The Food Challenge in a Growing World</h2>                <div class="text-center bg-red-100 text-red-800 p-4 rounded-lg">
+                    <p class="text-2xl font-bold">The FAO warns: Food production needs to jump by</p>
+                    <p class="text-7xl font-black">70%!</p>
+                </div>
+                <img src="https://images.pexels.com/photos/14036270/pexels-photo-14036270.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                     class="rounded-lg mt-6 h-40 w-full object-cover" 
+                     alt="Community garden showing sustainable agriculture" 
+                     loading="lazy">
+            </div>
+
+        </section>        <section id="slide20b" class="slide">
+            <div class="slide-content">
+                <h2 class="text-3xl font-bold text-center mb-6">The Recipe for Success</h2>
+                <div class="mt-6">
+                    <div class="grid grid-cols-2 gap-4 mt-4">
+                        <div class="bg-slate-100 p-4 rounded-lg text-center flex flex-col justify-center items-center h-full"><i class="fas fa-tractor text-3xl text-green-600 mb-2"></i><span>Invest in sustainable agriculture</span></div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center flex flex-col justify-center items-center h-full"><i class="fas fa-hand-holding-heart text-3xl text-rose-600 mb-2"></i><span>Long-term plans to fight poverty</span></div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center flex flex-col justify-center items-center h-full"><i class="fas fa-flask text-3xl text-blue-600 mb-2"></i><span>Boost R&D for better crops & tech</span></div>
+                        <div class="bg-slate-100 p-4 rounded-lg text-center flex flex-col justify-center items-center h-full"><i class="fas fa-globe text-3xl text-purple-600 mb-2"></i><span>Fairer global trade for food</span></div>
+                    </div>                </div>
+            </div>
+        </section>
+
+        <section id="slide21" class="slide" style="background-image: url('https://images.pexels.com/photos/3769146/pexels-photo-3769146.jpeg?auto=compress&cs=tinysrgb&w=1920');">
+            <div class="absolute inset-0 slide-overlay"></div>
+            <div class="slide-content text-center text-white bg-transparent border-none">
+                 <p class="text-2xl font-semibold">Up Next: People on the Move!</p>
+                 <h2 class="text-6xl my-4">The World of MIGRATION</h2>
+                 <i class="fas fa-plane-departure text-9xl mt-4 text-cyan-300 animate-pulse"></i>
+                 <p class="mt-8 text-xl">[Presenter 4: Lor] is here to navigate it.</p>
+            </div>
+
+
+        </section>        <section id="slide22" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold mb-4 text-blue-600">The Great Human Shuffle</h1>
+                <p class="text-2xl text-gray-700 mb-6">Why People Move & Who They Are</p>
+                
+                <!-- Key Stats -->
+                <div class="grid grid-cols-3 gap-4 mb-6">
+                    <div class="bg-blue-100 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-blue-600">281M</div>
+                        <div class="text-sm text-gray-600">Global Migrants</div>
+                    </div>
+                    <div class="bg-green-100 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-green-600">1 in 30</div>
+                        <div class="text-sm text-gray-600">People Move</div>
+                    </div>
+                    <div class="bg-orange-100 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-orange-600">12M</div>
+                        <div class="text-sm text-gray-600">Filipino OFWs</div>
+                    </div>
+                </div>                <!-- Main Image -->
+                <div class="flex justify-center">
+                    <img src="https://images.pexels.com/photos/20859302/pexels-photo-20859302/free-photo-of-passengers-climbing-on-train-car-rooftop.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" 
+                         class="rounded-xl shadow-lg w-full h-80 object-cover" 
+                         alt="People with luggage walking towards new destinations" 
+                         loading="lazy">
+                </div>
+            </div>
+
+        </section>
+          <section id="slide23" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">What IS Migration, Anyway?</h2>
+                <p class="text-center text-xl mb-6">Moving from one place to another with plans to stay (short-term or forever).</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+                    <div class="p-6 rounded-xl bg-blue-50 border border-blue-200 text-center">
+                        <h3 class="text-3xl font-bold text-blue-800">Internal Migration</h3>
+                        <i class="fas fa-map-signs text-6xl my-4 text-blue-600"></i>
+                        <p class="mt-2 text-lg">Moving <span class="font-bold">within</span> your own country.</p>
+                        <p class="mt-1 text-lg ">(e.g., province to Manila for college/work)</p>
+                    </div>
+                     <div class="p-6 rounded-xl bg-emerald-50 border border-emerald-200 text-center">
+                        <h3 class="text-3xl font-bold text-emerald-800">International Migration</h3>
+                        <i class="fas fa-globe-americas text-6xl my-4 text-emerald-600"></i>
+                        <p class="mt-2 text-lg">Crossing <span class="font-bold">national borders</span>.</p>
+                        <p class="mt-1 text-lg">The big one for globalization!</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide24" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Faces in the Crowd: <span class="text-orange-500">Types of Migrants</span></h2>                <div class="text-center">
+                    <!-- Top row: 3 cards -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                        <div class="bg-slate-100 p-4 rounded-lg flex flex-col justify-center items-center"><i class="fas fa-home text-4xl text-green-600 mb-2"></i><h3 class="font-bold text-lg">Immigrants</h3><p>(Permanent Stay)</p></div>
+                        <div class="bg-slate-100 p-4 rounded-lg flex flex-col justify-center items-center"><i class="fas fa-briefcase text-4xl text-blue-600 mb-2"></i><h3 class="font-bold text-lg">Workers</h3><p>(Temporary, e.g. OFWs)</p></div>
+                        <div class="bg-slate-100 p-4 rounded-lg flex flex-col justify-center items-center"><i class="fas fa-user-secret text-4xl text-slate-600 mb-2"></i><h3 class="font-bold text-lg">Irregular</h3><p>(Outside official channels)</p></div>
+                    </div>
+                    <!-- Bottom row: 2 cards centered -->
+                    <div class="flex justify-center">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl">
+                            <div class="bg-slate-100 p-4 rounded-lg flex flex-col justify-center items-center text-center"><i class="fas fa-users text-4xl text-purple-600 mb-2"></i><h3 class="font-bold text-lg">Petitioned</h3><p>(Family reunification)</p></div>
+                            <div class="bg-slate-100 p-4 rounded-lg flex flex-col justify-center items-center text-center"><i class="fas fa-flag text-4xl text-red-600 mb-2"></i><h3 class="font-bold text-lg">Refugees / Asylum-Seekers</h3><p>(Fleeing danger)</p></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+          <section id="slide25" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Why Leave Home? <span class="text-orange-500">Push & Pull Factors</span></h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+                    <div class="p-6 rounded-xl bg-red-50 border border-red-200">
+                        <h3 class="text-3xl font-bold text-red-800 flex items-center gap-2 justify-center md:justify-start">
+                            <i class="fas fa-arrow-circle-left"></i> PUSH
+                        </h3>
+                        <p class="mt-2 text-lg">Reasons to <span class="font-bold">LEAVE</span> a place.</p>
+                        <ul class="mt-4">
+                            <li>No jobs, poverty</li>
+                            <li>Conflict, war, bad governance</li>
+                            <li>Natural disasters, persecution</li>
+                        </ul>
+                    </div>
+                     <div class="p-6 rounded-xl bg-green-50 border border-green-200">
+                        <h3 class="text-3xl font-bold text-green-800 flex items-center gap-2 justify-center md:justify-start">
+                            PULL <i class="fas fa-arrow-circle-right"></i>
+                        </h3>
+                        <p class="mt-2 text-lg">Reasons to <span class="font-bold">GO</span> to a place.</p>
+                        <ul class="mt-4">
+                            <li>Job opportunities, better salary</li>
+                            <li>Education, safety, family</li>
+                            <li>Political freedom, quality of life</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </section>
+          <section id="slide26" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Migration by the Numbers: A Global Snapshot</h2>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                    <div class="bg-sky-100 p-4 rounded-lg"><p class="text-4xl font-bold text-sky-700">247M</p><p>Living outside birth country</p></div>
+                    <div class="bg-sky-100 p-4 rounded-lg"><p class="text-4xl font-bold text-sky-700">90%</p><p>Move for economic reasons</p></div>
+                    <div class="bg-sky-100 p-4 rounded-lg"><p class="text-4xl font-bold text-sky-700">10%</p><p>Are refugees / asylum seekers</p></div>
+                    <div class="bg-yellow-100 p-4 rounded-lg"><p class="text-4xl font-bold text-yellow-700">#6</p><p>Philippines is 6th top sending country!</p></div>
+                </div>
+                <p class="text-center mt-6 text-xl">Top Sending Countries: India, Mexico, China, Russia, Syria, <span class="font-bold">Philippines</span></p>
+                <p class="text-center mt-2 text-xl">Key Trend: ~50% of migrants move from developing to developed nations.</p>
+            </div>
+
+        </section>        <section id="slide27" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-3xl text-center mb-6">The Impact Zone: <span class="text-green-600">Migration & Receiving Countries</span></h2>
+                
+                <!-- Economic Engine Section -->
+                <div class="bg-gradient-to-br from-green-50 to-emerald-100 p-6 rounded-xl border-2 border-green-200 mb-6">
+                    <h3 class="text-2xl font-bold text-green-800 text-center mb-4">
+                        <i class="fas fa-cogs text-green-600 mr-2"></i>
+                        Economic Engine: The Numbers Don't Lie
+                    </h3>
+                    
+                    <p class="text-lg text-center text-gray-700 mb-4">Migrants often fill labor needs, contribute BIG to GDP</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-3 text-center">
+                        <div class="bg-white p-3 rounded-lg shadow-md">
+                            <p class="text-2xl font-black text-green-700">$2 Trillion</p>
+                            <p class="text-base font-semibold">US Migration Contribution</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg shadow-md">
+                            <p class="text-2xl font-black text-green-700">$550 Billion</p>
+                            <p class="text-base font-semibold">Germany Migration Contribution</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- The Hot Debate Section -->
+                <div class="bg-gradient-to-br from-yellow-50 to-orange-100 p-4 rounded-xl border-2 border-yellow-200">
+                    <h3 class="text-xl font-bold text-orange-800 text-center mb-3">
+                        🔥 The Hot Debate: Assets or Liabilities? 🔥
+                    </h3>
+                    
+                    <div class="grid md:grid-cols-2 gap-3">
+                        <div class="bg-white p-3 rounded-lg">
+                            <h4 class="font-bold text-blue-700 mb-1">📚 Harvard Study Says:</h4>
+                            <p class="text-sm">Fears of job loss for locals? Often weaker than we think!</p>
+                            <p class="text-sm mt-1">Fiscal impact? <span class="font-bold">Small</span></p>
+                        </div>
+                        <div class="bg-white p-3 rounded-lg">
+                            <h4 class="font-bold text-green-700 mb-1">💼 IMF Finding:</h4>
+                            <p class="text-sm">Refugees in Europe could even <span class="font-bold text-green-600">BOOST GDP!</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </section>          <section id="slide27b" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-8">The Other Side: <span class="text-red-600">Anti-Immigrant Sentiment</span></h2>
+                
+                <!-- Main Content Container -->
+                <div class="bg-gradient-to-br from-red-50 to-orange-50 p-6 rounded-2xl border-2 border-red-200">
+                    
+                    <!-- Split Image Representation -->
+                    <div class="grid md:grid-cols-2 gap-6 mb-6">
+                        <div class="bg-gradient-to-br from-blue-50 to-blue-100 p-4 rounded-xl text-center">
+                            <i class="fas fa-users text-4xl text-blue-600 mb-2"></i>
+                            <h4 class="font-bold text-blue-700">Positive Contributions</h4>
+                            <p class="text-sm">Economic growth, innovation, cultural diversity</p>
+                        </div>
+                        <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl text-center">
+                            <i class="fas fa-protest text-4xl text-red-600 mb-2"></i>
+                            <h4 class="font-bold text-red-700">Anti-Immigration Sentiment</h4>
+                            <p class="text-sm">Fear, nationalism, political narratives</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Core Elements -->
+                    <div class="bg-white p-6 rounded-xl shadow-md">
+                        <h3 class="text-2xl font-bold text-red-800 text-center mb-4">
+                            <i class="fas fa-exclamation-triangle text-red-600 mr-2"></i>
+                            Why Does This Happen?
+                        </h3>
+                        
+                        <div class="grid md:grid-cols-3 gap-4">
+                            <div class="text-center p-3 bg-red-50 rounded-lg">
+                                <i class="fas fa-flag text-2xl text-red-600 mb-2"></i>
+                                <h4 class="font-bold text-red-700">Fear & Nationalism</h4>
+                                <p class="text-xs">Cultural change anxiety</p>
+                            </div>
+                            <div class="text-center p-3 bg-red-50 rounded-lg">
+                                <i class="fas fa-comments text-2xl text-red-600 mb-2"></i>
+                                <h4 class="font-bold text-red-700">Political Narratives</h4>
+                                <p class="text-xs">Media representation & rhetoric</p>
+                            </div>
+                            <div class="text-center p-3 bg-red-50 rounded-lg">
+                                <i class="fas fa-user-tie text-2xl text-red-600 mb-2"></i>
+                                <h4 class="font-bold text-red-700">Political Figures</h4>
+                                <p class="text-xs">Examples like Trump's policies</p>
+                            </div>                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+          <section id="slide28" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6"><i class="fas fa-microphone-alt text-sky-500"></i> Let's Hear Your Thoughts!</h2>
+                <div class="interactive-prompt">
+                    <p class="text-2xl font-bold text-sky-800 text-center">When you hear about immigrants or OFWs...</p>
+                    <p class="mt-2 text-lg text-center">What are some common perceptions or stereotypes you encounter? Good or bad.</p>
+                </div>
+                 <div class="mt-8 text-center text-slate-600">
+                    <p class="text-lg">Facilitated discussion: Aiming for 2-3 varied and respectful responses.</p>
+                </div>
+            </div>
+
+        </section>
+        
+        <section id="slide29" class="slide" style="background-image: url('https://images.pexels.com/photos/10850064/pexels-photo-10850064.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2');">
+            <div class="absolute inset-0 slide-overlay"></div>
+            <div class="slide-content text-center text-white bg-transparent border-none">
+                 <p class="text-2xl font-semibold">The Journey Continues...</p>
+                 <h2 class="text-6xl my-4">The Other Side of the Coin</h2>
+                 <i class="fas fa-reply text-9xl mt-4 text-orange-300 animate-pulse"></i>
+                 <p class="mt-8 text-xl">[Presenter 5: Carl] will discuss sending countries & migration's future.</p>
+            </div>
+
+
+        </section>        <section id="slide30" class="slide">
+            <div class="slide-content text-center">
+                <h1 class="text-4xl font-bold mb-4 text-indigo-600">Homelands & Horizons</h1>
+                <p class="text-2xl text-gray-700 mb-6">The Two-Way Street of Migration</p>
+                
+                <!-- Key Impact Stats -->
+                <div class="grid grid-cols-2 gap-4 mb-6">
+                    <div class="bg-blue-100 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-blue-600">$689B</div>
+                        <div class="text-sm text-gray-600">Global Remittances</div>
+                    </div>
+                    <div class="bg-orange-100 rounded-lg p-4">
+                        <div class="text-3xl font-bold text-orange-600">10.5%</div>
+                        <div class="text-sm text-gray-600">PH GDP from OFW</div>
+                    </div>
+                </div>                <!-- Main Image -->
+                <div class="flex justify-center">
+                    <img src="https://images.pexels.com/photos/4386431/pexels-photo-4386431.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                         class="rounded-xl shadow-lg w-full max-w-4xl h-80 object-cover" 
+                         alt="Money transfer representing remittances" 
+                         loading="lazy">
+                </div>
+            </div>
+
+        </section><section id="slide31" class="slide">
+
+             <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">The Impact Back Home</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="bg-green-100 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-green-800">The Good News: Remittances! <i class="fas fa-money-bill-wave"></i></h3>
+                        <p class="mt-2">A vital lifeline for families and communities.</p>
+                        <ul class="mt-4">
+                            <li>Boosts local economies</li>
+                            <li>Creates small businesses & jobs</li>
+                            <li>Can change social standing</li>
+                        </ul>
+                    </div>
+                    <div class="bg-red-100 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-red-800">The Costs: Brain Drain <i class="fas fa-brain"></i></h3>
+                        <p class="mt-2">Losing skilled professionals (doctors, engineers, teachers).</p>
+                        <p class="font-bold mt-4 text-red-700">Who will build the nation?</p>
+                        <p class="mt-2">Remittances don't always rebalance overall economic growth.</p>
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide32" class="slide">
+            <div class="slide-content">
+                <!-- Title Section -->
+                <div class="text-center mb-6">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">
+                        <span class="text-red-600">⚠️ The Darker Sides</span> of a Global Journey
+                    </h2>
+                    <p class="text-base text-gray-600">Not all migration stories have happy endings</p>
+                </div>
+
+                <!-- Main Content Grid -->
+                <div class="grid md:grid-cols-3 gap-4 mb-6">
+                    
+                    <!-- Human Trafficking Card -->
+                    <div class="bg-gradient-to-br from-red-50 to-red-100 p-4 rounded-xl border-2 border-red-200 shadow-md">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-user-times text-3xl text-red-600 mb-1"></i>
+                            <h3 class="text-lg font-bold text-red-800">Human Trafficking</h3>
+                        </div>
+                        <div class="space-y-1 text-sm">
+                            <p class="font-semibold text-red-700">• Millions exploited globally</p>
+                            <p>• Forced labor & modern slavery</p>
+                            <p>• Dangerous migration routes</p>
+                            <p>• Vulnerable populations targeted</p>
+                        </div>
+                    </div>
+
+                    <!-- Integration Challenges Card -->
+                    <div class="bg-gradient-to-br from-orange-50 to-orange-100 p-4 rounded-xl border-2 border-orange-200 shadow-md">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-ban text-3xl text-orange-600 mb-1"></i>
+                            <h3 class="text-lg font-bold text-orange-800">Integration Barriers</h3>
+                        </div>
+                        <div class="space-y-1 text-sm">
+                            <p class="font-semibold text-orange-700">• Discrimination & racism</p>
+                            <p>• Language & cultural barriers</p>
+                            <p>• Xenophobia (fear of foreigners)</p>
+                            <p>• Limited access to services</p>
+                        </div>
+                    </div>
+
+                    <!-- Economic Exploitation Card -->
+                    <div class="bg-gradient-to-br from-yellow-50 to-yellow-100 p-4 rounded-xl border-2 border-yellow-200 shadow-md">
+                        <div class="text-center mb-3">
+                            <i class="fas fa-coins text-3xl text-yellow-600 mb-1"></i>
+                            <h3 class="text-lg font-bold text-yellow-800">Economic Exploitation</h3>
+                        </div>
+                        <div class="space-y-1 text-sm">
+                            <p class="font-semibold text-yellow-700">• Below minimum wage jobs</p>
+                            <p>• Poor working conditions</p>
+                            <p>• No labor protections</p>
+                            <p>• Debt bondage situations</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Government Challenge Section -->
+                <div class="bg-gradient-to-br from-slate-50 to-slate-100 p-6 rounded-2xl border-2 border-slate-200 shadow-lg">
+                    <div class="text-center">
+                        <h3 class="text-xl font-bold text-slate-800 mb-3">
+                            <i class="fas fa-balance-scale text-2xl text-indigo-600 mr-2"></i>
+                            The Government's Tightrope Walk
+                        </h3>
+                        
+                        <div class="grid md:grid-cols-2 gap-4 mt-4">
+                            <div class="bg-white p-3 rounded-lg shadow-md">
+                                <h4 class="font-bold text-green-700 mb-1">💰 Economic Benefits</h4>
+                                <p class="text-sm">GDP boost from remittances, filling labor gaps, tax contributions</p>
+                            </div>
+                            <div class="bg-white p-3 rounded-lg shadow-md">
+                                <h4 class="font-bold text-red-700 mb-1">⚖️ Social Costs</h4>
+                                <p class="text-sm">Brain drain, family separation, integration challenges</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section><section id="slide33" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">The Migrant Experience: <span class="text-indigo-500">Not One-Size-Fits-All</span></h2>
+                <p class="text-center text-xl mb-6">Migration has a <span class="font-bold">"dual nature"</span> with complex, contradictory outcomes.</p>
+                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 relative">
+                    <div class="p-6 rounded-xl bg-green-50 border border-green-200">
+                        <h3 class="text-3xl font-bold text-green-800 text-center">Liberation & Opportunity</h3>
+                        <p class="mt-2 text-lg">For many skilled professionals: financial rewards and new horizons.</p>
+                        <img src="https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mt-4 h-40 w-full object-cover" 
+                             alt="Successful professional in modern office" 
+                             loading="lazy">
+                    </div>
+                     <div class="p-6 rounded-xl bg-red-50 border border-red-200">
+                        <h3 class="text-3xl font-bold text-red-800 text-center">Sacrifice & Exploitation</h3>
+                        <p class="mt-2 text-lg">For others: dislocation, disempowerment, and vulnerability.</p>
+                        <img src="https://images.pexels.com/photos/5699456/pexels-photo-5699456.jpeg?auto=compress&cs=tinysrgb&w=1920" 
+                             class="rounded-lg mt-4 h-40 w-full object-cover" 
+                             alt="Tired worker representing hardship" 
+                             loading="lazy">
+                    </div>
+                </div>
+            </div>
+
+        </section>        <section id="slide34" class="slide">
+
+            <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">The Future of Moving</h2>
+                <div class="grid md:grid-cols-2 gap-6 items-stretch">
+                    <div class="bg-sky-100 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold">Key Trends</h3>
+                        <ul class="mt-4">
+                            <li>Migration isn't stopping (global interdependence)</li>
+                            <li>Climate Change: The next BIG driver of displacement?</li>
+                        </ul>
+                    </div>
+                     <div class="bg-slate-100 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold text-center">Policy Puzzles</h3>
+                        <ul class="mt-4">
+                            <li>How to manage migration humanely & effectively?</li>
+                            <li>Balancing national interests with global responsibilities.</li>
+                        </ul>
+                    </div>
+        </section>        <section id="slide35" class="slide">
+
+             <div class="slide-content">
+                <h2 class="text-4xl text-center mb-6">Wrapping It All Up</h2>
+                <ul class="text-xl space-y-4">
+                    <li>Demography is our collective story, shaping our world.</li>
+                    <li>Population debates are complex: numbers vs. justice vs. resources.</li>
+                    <li>Women's rights & food security are central to sustainable populations.</li>
+                    <li>Migration is a powerful force with dual impacts (good & bad) for all involved.</li>
+                    <li class="font-bold text-indigo-600">Understanding these dynamics is crucial for a fair & thriving global future.</li>
+                </ul>
+            </div>
+
+        </section>
+        
+        <section id="slide36" class="slide" style="background-color: #0d2447;">
+            <div class="slide-content text-center bg-transparent text-white border-none">
+                 <h2 class="text-5xl mb-6">Your Voice Matters!</h2>
+                 <div class="interactive-prompt bg-sky-900/50 border-sky-400">
+                    <p class="mt-2 text-lg">If you could send ONE message to world leaders about managing global migration, what would it be?</p>
+                </div>
+                <div class="mt-12">
+                    <h2 class="text-6xl font-black">Thank You!</h2>
+                </div>
+            </div>
+
+        </section>
+
+
+    </div>
+
+    <div class="nav-buttons">
+        <button id="prevBtn" class="nav-button" title="Previous Slide" aria-label="Previous Slide">
+            <i class="fas fa-arrow-up"></i>
+        </button>
+        <button id="nextBtn" class="nav-button" title="Next Slide" aria-label="Next Slide">
+            <i class="fas fa-arrow-down"></i>
+        </button>
+    </div>    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const container = document.getElementById('slide-container');
+            const slides = document.querySelectorAll('.slide');
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const tocButton = document.getElementById('tocButton');
+            const tocModal = document.getElementById('tocModal');
+            const tocClose = document.getElementById('tocClose');
+            const tocLinks = document.querySelectorAll('.toc-link');
+
+            // Advanced Navigation Elements
+            const presenterTag = document.getElementById('presenterTag');
+            const currentPresenter = document.getElementById('currentPresenter');
+            const slideNumber = document.getElementById('slideNumber');
+            const currentSlideNumber = document.getElementById('currentSlideNumber');
+            const homeButton = document.getElementById('homeButton');
+            const quickNavModal = document.getElementById('quickNavModal');
+            const quickNavClose = document.getElementById('quickNavClose');
+            const quickNavGrid = document.getElementById('quickNavGrid');            const dotNav = document.getElementById('dotNav');
+            const dotContainer = document.getElementById('dotContainer');
+              let currentSlide = 0;
+
+            // Slide data for presenters and titles
+            const slideData = [
+                { presenter: 'Alyssa', title: 'People on the Move' },
+                { presenter: 'Alyssa', title: 'The Population Clock is Ticking' },
+                { presenter: 'Alyssa', title: 'Population Patterns: Big, Small & Everything in Between' },
+                { presenter: 'Alyssa', title: 'Population: The Ultimate Balancing Act' },
+                { presenter: 'Alyssa', title: 'The Youth Bulge: Blessing or Burden?' },
+                { presenter: 'Alfonso', title: 'The Population Debate' },
+                { presenter: 'Alfonso', title: 'The Battle for the Future' },
+                { presenter: 'Alfonso', title: 'Population Explosion: The Ultimate Reality Check' },
+                { presenter: 'Alfonso', title: 'Malthus: The Original Doomsdayer' },
+                { presenter: 'Alfonso', title: 'Modern Malthusians' },
+                { presenter: 'Alfonso', title: 'Critiques of Population Control' },
+                { presenter: 'Alfonso', title: 'More People, More Power?' },
+                { presenter: 'Alfonso', title: 'Overpopulation: Myth or Reality?' },
+                { presenter: 'Alfonso', title: 'Rights, Resources, & Realities' },
+                { presenter: 'Erika', title: 'The Human Element' },
+                { presenter: 'Erika', title: 'Women at the Center of Demography' },
+                { presenter: 'Erika', title: 'Feminist Perspectives on Population' },
+                { presenter: 'Erika', title: 'The UNFPA\'s "Three Zeros"' },
+                { presenter: 'Erika', title: 'Feeding the World: Sovereignty vs. Security' },
+                { presenter: 'Erika', title: 'The Food Challenge - Part 1' },
+                { presenter: 'Erika', title: 'The Food Challenge - Part 2' },
+                { presenter: 'Erika', title: 'The World of MIGRATION' },
+                { presenter: 'Lor', title: 'The Great Human Shuffle' },
+                { presenter: 'Lor', title: 'What IS Migration, Anyway?' },
+                { presenter: 'Lor', title: 'Faces in the Crowd: Types of Migrants' },
+                { presenter: 'Lor', title: 'Why Leave Home? Push & Pull Factors' },
+                { presenter: 'Lor', title: 'Migration by the Numbers' },
+                { presenter: 'Lor', title: 'The Impact Zone - Economic Engine' },
+                { presenter: 'Lor', title: 'The Impact Zone - Challenges' },
+                { presenter: 'Lor', title: 'Let\'s Hear Your Thoughts!' },
+                { presenter: 'Lor', title: 'The Other Side of the Coin' },
+                { presenter: 'Carl', title: 'Homelands & Horizons' },
+                { presenter: 'Carl', title: 'The Impact Back Home' },
+                { presenter: 'Carl', title: 'The Darker Sides of a Global Journey' },
+                { presenter: 'Carl', title: 'The Darker Sides - Part 2' },
+                { presenter: 'Carl', title: 'The Migrant Experience: Not One-Size-Fits-All' },
+                { presenter: 'Carl', title: 'The Future of Moving' },
+                { presenter: 'Carl', title: 'Wrapping It All Up' },
+                { presenter: 'All Presenters', title: 'Your Voice Matters!' }
+            ];
+
+            // Initialize Quick Navigation Grid
+            function generateQuickNavGrid() {
+                quickNavGrid.innerHTML = '';
+                slideData.forEach((slide, index) => {
+                    const item = document.createElement('div');
+                    item.className = 'quick-nav-item';
+                    if (index === currentSlide) {
+                        item.classList.add('active');
+                    }
+                    item.innerHTML = `
+                        <div class="slide-thumb">${index + 1}</div>
+                        <div class="slide-info">${slide.title}</div>
+                    `;
+                    item.addEventListener('click', () => {
+                        goToSlide(index);
+                        quickNavModal.classList.remove('show');
+                    });
+                    quickNavGrid.appendChild(item);
+                });
+            }
+
+            // Update hovering navigation elements
+            function updateHoveringNav() {
+                const slideInfo = slideData[currentSlide];
+                currentPresenter.textContent = slideInfo.presenter;
+                currentSlideNumber.textContent = `${currentSlide + 1} / ${slides.length}`;
+                
+                // Update quick nav grid active state
+                const quickNavItems = quickNavGrid.querySelectorAll('.quick-nav-item');
+                quickNavItems.forEach((item, index) => {
+                    if (index === currentSlide) {
+                        item.classList.add('active');
+                    } else {
+                        item.classList.remove('active');
+                    }
+                });
+            }
+
+            // Add fade animation to slides
+            function addFadeAnimation() {
+                slides.forEach(slide => {
+                    slide.classList.add('slide-fade');
+                });
+            }
+
+            function goToSlide(slideIndex) {
+                if (slideIndex >= 0 && slideIndex < slides.length) {
+                    // Add fade out effect to current slide
+                    if (slides[currentSlide]) {
+                        slides[currentSlide].classList.add('fade-out');
+                    }
+                    
+                    setTimeout(() => {
+                        slides[slideIndex].scrollIntoView({ behavior: 'smooth' });
+                        
+                        // Remove fade out from all slides
+                        slides.forEach(slide => {
+                            slide.classList.remove('fade-out');
+                        });
+                        
+                        // Close modals if open
+                        tocModal.classList.remove('show');
+                        quickNavModal.classList.remove('show');
+                    }, 150);
+                }
+            }
+              // Generate all dots and center the active one
+            function generateDots() {
+                dotContainer.innerHTML = '';
+                
+                // Generate all dots
+                for (let i = 0; i < slides.length; i++) {
+                    const dot = document.createElement('button');
+                    dot.className = 'dot-nav-item';
+                    dot.setAttribute('data-slide', `Slide ${i + 1}`);
+                    dot.setAttribute('data-index', i);
+                    dot.addEventListener('click', () => goToSlide(i));
+                    dotContainer.appendChild(dot);
+                }
+                
+                updateDotNavigation();
+            }
+            
+            function updateDotNavigation() {
+                const dots = dotContainer.querySelectorAll('.dot-nav-item');
+                
+                // Update dots active state
+                dots.forEach((dot, index) => {
+                    if (index === currentSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+                
+                // Center the active dot by scrolling the container
+                const activeDot = dots[currentSlide];
+                if (activeDot) {
+                    activeDot.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center',
+                        inline: 'center'
+                    });
+                }
+            }
+            
+            // Initialize dots
+            generateDots();
+            
+            function updateButtons() {
+                prevBtn.disabled = currentSlide === 0;
+                nextBtn.disabled = currentSlide === slides.length - 1;
+                  // Update dot navigation
+                updateDotNavigation();
+                
+                // Update hovering navigation
+                updateHoveringNav();
+            }
+
+            // Home button handler
+            homeButton.addEventListener('click', () => {
+                goToSlide(0);
+            });
+
+            // Quick Navigation Modal handlers
+            slideNumber.addEventListener('click', (e) => {
+                if (e.target === slideNumber || e.target === currentSlideNumber) {
+                    quickNavModal.classList.add('show');
+                }
+            });
+
+            quickNavClose.addEventListener('click', () => {
+                quickNavModal.classList.remove('show');
+            });
+
+            quickNavModal.addEventListener('click', (e) => {
+                if (e.target === quickNavModal) {
+                    quickNavModal.classList.remove('show');
+                }
+            });
+
+            // Navigation button handlers
+            prevBtn.addEventListener('click', () => goToSlide(currentSlide - 1));
+            nextBtn.addEventListener('click', () => goToSlide(currentSlide + 1));
+              // Keyboard navigation
+            window.addEventListener('keydown', (e) => {
+                if (tocModal.classList.contains('show') || quickNavModal.classList.contains('show')) {
+                    if (e.key === 'Escape') {
+                        tocModal.classList.remove('show');
+                        quickNavModal.classList.remove('show');
+                    }
+                    return;
+                }
+                
+                if(e.key === 'ArrowDown' || e.key === 'ArrowRight') {
+                    e.preventDefault();
+                    goToSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
+                    e.preventDefault();
+                    goToSlide(currentSlide - 1);
+                } else if (e.key === 'Home') {
+                    e.preventDefault();
+                    goToSlide(0);
+                } else if (e.key === 'End') {
+                    e.preventDefault();
+                    goToSlide(slides.length - 1);
+                } else if (e.key === 'q' || e.key === 'Q') {
+                    e.preventDefault();
+                    quickNavModal.classList.toggle('show');
+                }
+            });
+            
+            // Table of Contents handlers
+            tocButton.addEventListener('click', () => {
+                tocModal.classList.add('show');
+                tocModal.setAttribute('aria-hidden', 'false');
+            });
+            
+            tocClose.addEventListener('click', () => {
+                tocModal.classList.remove('show');
+                tocModal.setAttribute('aria-hidden', 'true');
+            });
+            
+            tocModal.addEventListener('click', (e) => {
+                if (e.target === tocModal) {
+                    tocModal.classList.remove('show');
+                    tocModal.setAttribute('aria-hidden', 'true');
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const targetId = link.getAttribute('href').substring(1);
+                    const targetSlide = document.getElementById(targetId);
+                    if (targetSlide) {
+                        const slideIndex = Array.from(slides).indexOf(targetSlide);
+                        goToSlide(slideIndex);
+                    }
+                });
+            });
+              // Intersection Observer for slide detection
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const intersectingSlide = entry.target;
+                        currentSlide = Array.from(slides).indexOf(intersectingSlide);
+                        updateButtons();
+                    }
+                });
+            }, { threshold: 0.6 });
+
+            slides.forEach(slide => {
+                observer.observe(slide);
+            });
+
+            // Initialize everything
+            addFadeAnimation();
+            generateQuickNavGrid();
+            updateButtons();
+        });
+    </script>
+
+</body>
+</html>
